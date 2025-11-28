@@ -44,7 +44,10 @@ const App = () => {
 
   return (
     <div>
+      <h1>クライアント側音声読み上げサンプル</h1>
+      <h2>読み上げ制御コンポーネント</h2>
       <TextToSpeech tracks={kaisetsu} />
+      <h2>読み上げ対象テキスト</h2>
       <ul>
         {kaisetsu.map((item,idx) => (<li key={idx}>{item}</li>))}
       </ul>
