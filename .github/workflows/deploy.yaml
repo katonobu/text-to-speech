@@ -12,6 +12,8 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      VITE_BASE_PATH: /text-to-speech/  # GitHub Pages用
 
     steps:
       - name: Checkout

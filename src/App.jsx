@@ -5,7 +5,7 @@ const App = () => {
   const [kaisetsu, setKaisetsu] = useState(null)
   const [loading, setLoading] = useState(true)  
   useEffect(() => {
-    fetch("/kaisetsu_tanki.json")
+    fetch(`${import.meta.env.BASE_URL}kaisetsu_tanki.json`)
       .then(response => {
         if (!response.ok) throw new Error('Failed to fetch metadata')
         return response.json()
