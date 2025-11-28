@@ -4,7 +4,10 @@ name: Deploy Vite React App to GitHub Pages
 on:
   push:
     branches:
-      - main  # デプロイ対象ブランチ
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -13,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
