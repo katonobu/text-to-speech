@@ -12,9 +12,13 @@ const TextToSpeech = () => {
     playingStt,
     currentTrack,
     totalTracks,
+    playPauseDisabled,
     playPause,
+    stopDisabled,
     stop,
+    prevTrackDisabled,
     prevTrack,
+    nextTrackDisabled,
     nextTrack,
   } = useTextToSpeech(texts);
 
@@ -22,8 +26,8 @@ const TextToSpeech = () => {
   if (loading) return <p className="p-4">読み込み中...</p>
   if (!texts) return <p className="p-4">データがありません。</p>
 
-  const buttonLabel =
-    playingStt === "IDLE" ? "▶" : playingStt === "PLAY" ? "⏸" : "⏸▶";
+  const playPauseButtonLabel =
+    (playingStt === "IDLE" || playingStt === "PAUSE") ? "▶" :  (playingStt === "PLAY") ? "⏸" : "..."
 
   return (
     <div className="p-4">
@@ -34,25 +38,31 @@ const TextToSpeech = () => {
         className="text-lg font-bold"
       >読み上げ制御コンポーネント</h2>
       <p>TRACK : {currentTrack + 1}/{totalTracks}</p>
-      <button 
-        class="border border-gray-500 rounded w-[25px] h-[25px] text-black bg-white"
+      <p>{playingStt}</p>
+      <button
+        className={`px-1 py-1 rounded text-white 
+                    ${prevTrackDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
         onClick={prevTrack}
-        disabled={currentTrack === 0}
-      >{"⏮"}</button>
+        disabled={prevTrackDisabled()}
+      >⏮</button>
       <button
-        class="border border-gray-500 rounded w-[40px] h-[25px] text-black bg-white"
+        className={`px-1 py-1 rounded text-white 
+                    ${playPauseDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
         onClick={playPause}
-      >{buttonLabel}</button>
+        disabled={playPauseDisabled()}
+      >{playPauseButtonLabel}</button>
       <button
-        class="border border-gray-500 rounded w-[25px] h-[25px] text-black bg-white"
+        className={`px-1 py-1 rounded text-white 
+                    ${stopDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
         onClick={stop}
-        disabled={playingStt === "IDLE"}
+        disabled={stopDisabled()}
       >⏹</button>
       <button
-        class="border border-gray-500 rounded w-[25px] h-[25px] text-black bg-white"
+        className={`px-1 py-1 rounded text-white 
+                    ${nextTrackDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
         onClick={nextTrack}
-        disabled={currentTrack >= totalTracks - 1}
-      >{"⏭"}</button>
+        disabled={nextTrackDisabled()}
+      >⏭</button>
       <h2
         className="text-lg font-bold"
       >読み上げ対象テキスト</h2>
