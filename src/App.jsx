@@ -2,7 +2,7 @@ import TextToSpeech from './TextToSpeech';
 
 const App = () => {
   return (
-    <TextToSpeech/>
+    <TextToSpeech disabled = {false}/>
   );
 };
 
