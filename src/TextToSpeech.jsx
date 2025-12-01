@@ -71,6 +71,7 @@ const TextToSpeech = () => {
           key={idx}
         >{item}</li>))}
       </ul>
+      <p className="text-xs">Build Time : {import.meta.env.VITE_BUILD_TIME}</p>
     </div>
   );
 };

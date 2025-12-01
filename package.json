@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "VITE_BUILD_TIME=1967-09-17 vite",
+    "build": "VITE_BUILD_TIME=$(date +'%Y-%m-%d %H:%M:%S') vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
