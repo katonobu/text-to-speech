@@ -14,6 +14,8 @@ const TextToSpeech = () => {
     totalTracks,
     playPauseDisabled,
     playPause,
+    playStopDisabled,
+    playStop,
     stopDisabled,
     stop,
     prevTrackDisabled,
@@ -28,6 +30,9 @@ const TextToSpeech = () => {
 
   const playPauseButtonLabel =
     (playingStt === "IDLE" || playingStt === "PAUSE") ? "▶" :  (playingStt === "PLAY") ? "⏸" : "..."
+  const playStopButtonLabel =
+    (playingStt === "IDLE" || playingStt === "PAUSE") ? "▶" :  (playingStt === "PLAY") ? "⏹" : "..."
+
 
   return (
     <div className="p-4">
@@ -47,16 +52,10 @@ const TextToSpeech = () => {
       >⏮</button>
       <button
         className={`px-1 py-1 rounded text-white 
-                    ${playPauseDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
-        onClick={playPause}
-        disabled={playPauseDisabled()}
-      >{playPauseButtonLabel}</button>
-      <button
-        className={`px-1 py-1 rounded text-white 
-                    ${stopDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
-        onClick={stop}
-        disabled={stopDisabled()}
-      >⏹</button>
+                    ${playStopDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+        onClick={playStop}
+        disabled={playStopDisabled()}
+      >{playStopButtonLabel}</button>
       <button
         className={`px-1 py-1 rounded text-white 
                     ${nextTrackDisabled() ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
