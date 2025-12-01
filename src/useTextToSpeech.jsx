@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export const useTextToSpeech = ( tracks ) => {
   const [playingStt, setPlayingStt] = useState("IDLE");
@@ -44,13 +44,11 @@ export const useTextToSpeech = ( tracks ) => {
     };
     // 一時停止時ハンドラ
     u.onpause = () => {
-      setPlayingStt("PAUSE");
-      console.log("Pause")
+      console.log("Paused")
     }
     // 一時停止解除時ハンドラ
     u.onresume = () => {
-      setPlayingStt("PLAY");
-      console.log("Resume")
+      console.log("Resumed")
     }
     // トラック最後まで再生したときハンドラ
     u.onend = () => {
@@ -65,24 +63,26 @@ export const useTextToSpeech = ( tracks ) => {
     synth.speak(u);
   };
 
+  const playDisabled = () => !(playingStt === "IDLE")
   const play = () => {
     if (playingStt === "IDLE") {
+      setPlayingStt("TO_PLAY");
       playTrack(currentTrack);
     }
   };
 
+  const pauseDisabled = () => !(playingStt === "PLAY" || playingStt === "PAUSE")
   const pause = () => {
     if (playingStt === "PLAY") {
+      setPlayingStt("PAUSE");
       synth.pause();
-    }
-  };
-
-  const resume = () => {
-    if (playingStt === "PAUSE") {
+    } else if (playingStt === "PAUSE") {
+      setPlayingStt("PLAY");
       synth.resume();
     }
   }
 
+  const stopDisabled = () => false
   const stop = () => {
     synth.cancel();
     console.log("Stop")
@@ -90,17 +90,22 @@ export const useTextToSpeech = ( tracks ) => {
     setCurrentTrack(0);
   };
 
+  const playPauseDisabled = () => playingStt === "TO_PLAY"
   const playPause = () => {
     if (playingStt === "IDLE") {
       play()
     } else if (playingStt === "PLAY") {
       pause()
     } else if (playingStt === "PAUSE") {
-      resume()
+      pause()
+    } else if (playingStt === "TO_PLAY") {
+      // なにもしない      
     } else {
       console.log(`Unexpected stt ${playingStt}`)
     }
   }
+
+  const prevTrackDisabled = () => !(0 < currentTrack)
   const prevTrack = () => {
     if (0 < currentTrack) {
       setCurrentTrack(currentTrack - 1);
@@ -112,6 +117,8 @@ export const useTextToSpeech = ( tracks ) => {
       }
     }
   }
+
+  const nextTrackDisabled = () => !(currentTrack < tracks.length -1 )
   const nextTrack = () => {
     if (currentTrack < tracks.length -1 ) {
       setCurrentTrack(currentTrack + 1);
@@ -129,9 +136,17 @@ export const useTextToSpeech = ( tracks ) => {
     playingStt,
     currentTrack,
     totalTracks: tracks.length,
+    playDisabled,
+    play,
+    pauseDisabled,
+    pause,
+    playPauseDisabled,
     playPause,
+    stopDisabled,
     stop,
+    prevTrackDisabled,
     prevTrack,
+    nextTrackDisabled,
     nextTrack,
   };
 };
