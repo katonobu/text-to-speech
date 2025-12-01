@@ -4,6 +4,7 @@
   - onstartハンドラで音が出始めるタイミングを取れる。
 - pauseはイベント発火しないシステムが有る。
   - PAUSE状態への遷移はユーザー要求をトリガとし、onpause,onresumeハンドラには頼らない。
+- pauseの後のresume()が効かない?
 
 動作仕様
 |状態名|play|play/pause|pause|stop|prev|next|

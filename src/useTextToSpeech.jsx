@@ -90,6 +90,15 @@ export const useTextToSpeech = ( tracks ) => {
     setCurrentTrack(0);
   };
 
+  const playStopDisabled = () => false
+  const playStop = () => {
+    if (playingStt === "IDLE") {
+      play()
+    } else {
+      stop()
+    }
+  }
+
   const playPauseDisabled = () => playingStt === "TO_PLAY"
   const playPause = () => {
     if (playingStt === "IDLE") {
@@ -142,6 +151,8 @@ export const useTextToSpeech = ( tracks ) => {
     pause,
     playPauseDisabled,
     playPause,
+    playStopDisabled,
+    playStop,
     stopDisabled,
     stop,
     prevTrackDisabled,
