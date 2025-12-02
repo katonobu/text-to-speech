@@ -1,7 +1,7 @@
 import { useFetchKaisetsuTexts } from "./useFetchKaisetsuTexts";
 import { TextToSpeechCtrl} from "./TextToSpeechCtrl"
 
-const TextToSpeech = ({disabled}) => {
+const TextToSpeech = () => {
   const {
     texts,
     loading
@@ -17,7 +17,7 @@ const TextToSpeech = ({disabled}) => {
         className="text-lg font-bold"
       >読み上げ制御コンポーネント</h2>
 
-      <TextToSpeechCtrl texts={texts} disabled={loading}></TextToSpeechCtrl>
+      <TextToSpeechCtrl texts={texts} loading={loading}></TextToSpeechCtrl>
 
       <h2
         className="text-lg font-bold"
