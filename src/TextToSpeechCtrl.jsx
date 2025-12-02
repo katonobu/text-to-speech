@@ -1,6 +1,6 @@
-
 import { useTextToSpeech } from "./useTextToSpeech";
 import { useTtsTicker } from "./useTtsTicker";
+import { TtsTicker } from "./TtsTicker";
 
 export const TextToSpeechCtrl = ({texts, loading}) => {
   const {
@@ -48,7 +48,7 @@ export const TextToSpeechCtrl = ({texts, loading}) => {
       >⏭</button>
 
       <p>{charsPerSec}</p>
-      <p>{currentStr.slice(displayStartIndex, displayStartIndex + length)}</p>
+      <TtsTicker currentStr={currentStr} displayStartIndex={displayStartIndex}></TtsTicker>
     </div>
   );
 };
