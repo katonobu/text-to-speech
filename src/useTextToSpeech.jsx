@@ -10,11 +10,6 @@ export const useTextToSpeech = ( tracks ) => {
 
   const synth = window.speechSynthesis;
 
-  const updateEvent = (event) => {
-    const {charIndex, elapsedTime, name} = event
-    setEventInfo({charIndex, elapsedTime, name})
-  }
-
   // reloadされるとき、再生を停止させる。
   useEffect(() => {
     const handleUnload = () => {
@@ -51,17 +46,14 @@ export const useTextToSpeech = ( tracks ) => {
         setPlayingStt("PLAY");
         console.log(`Start track ${index}`);
       }
-      updateEvent(event)
     };
     // 一時停止時ハンドラ
     u.onpause = (event) => {
       console.log("Paused")
-      updateEvent(event)
     }
     // 一時停止解除時ハンドラ
     u.onresume = (event) => {
       console.log("Resumed")
-      updateEvent(event)
     }
     // トラック最後まで再生したときハンドラ
     u.onend = (event) => {
@@ -70,10 +62,10 @@ export const useTextToSpeech = ( tracks ) => {
         setCurrentTrack(index + 1);
         playTrack(index + 1); // 次を再生
       }
-      updateEvent(event)
     };
     u.onboundary = (event) => {
-      updateEvent(event)
+      const {charIndex, elapsedTime, name, type} = event
+      setEventInfo({charIndex, elapsedTime, name, type})
     }
 
     // 先頭から再生開始

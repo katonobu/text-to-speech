@@ -1,16 +1,6 @@
 
 import { useTextToSpeech } from "./useTextToSpeech";
-
-const TtsTicker = ({currentStr, eventInfo, startOffset, length}) => {
-  const {charIndex, elapsedTime, name} = eventInfo?eventInfo:{charIndex:-1, elapsedTime:-1, name:""}
-  if (name === "start" || name === "end") {
-    return <p>{name}</p>
-  } else {
-    const startIndex = Math.max(0, charIndex - startOffset)
-    return <p>{currentStr.slice(startIndex, startIndex + length)}</p>
-  }
-}
-
+import { useTtsTicker } from "./useTtsTicker";
 
 export const TextToSpeechCtrl = ({texts, loading}) => {
   const {
@@ -31,7 +21,8 @@ export const TextToSpeechCtrl = ({texts, loading}) => {
     (playingStt === "IDLE" || playingStt === "PAUSE") ? "▶" :  (playingStt === "PLAY") ? "⏹" : "..."
 
   const startOffset = 3
-  const {charIndex, elapsedTime, name} = eventInfo?eventInfo:{charIndex:-1, elapsedTime:-1, name:""}
+  const updateIntervalMs = 500
+  const {displayStartIndex, charsPerSec} = useTtsTicker(currentStr, playingStt, eventInfo, startOffset, updateIntervalMs)
   const length = 32
   return (
     <div className="p-4">
@@ -56,8 +47,8 @@ export const TextToSpeechCtrl = ({texts, loading}) => {
         disabled={nextTrackDisabled() || loading || !texts}
       >⏭</button>
 
-      <p>{charIndex} {charIndex === 0?0:elapsedTime/charIndex} </p>
-      <TtsTicker currentStr={currentStr} eventInfo={eventInfo} startOffset={startOffset} length={length}></TtsTicker>
+      <p>{charsPerSec}</p>
+      <p>{currentStr.slice(displayStartIndex, displayStartIndex + length)}</p>
     </div>
   );
 };
